@@ -1,0 +1,10 @@
+#!/bin/bash
+
+rm -rf build \
+	&& rm -rf packages \
+	&& mkdir build \
+	&& cd build \
+	&& cmake .. \
+	&& make
+
+cd -
