@@ -49,3 +49,6 @@ Thumbs.db
 
 # CMakeFiles
 /CMakeFiles/
+
+# ccls
+.ccls-cache
