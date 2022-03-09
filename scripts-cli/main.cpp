@@ -22,36 +22,23 @@ using namespace TCLAP;
 
 int main(int argumentCount, char* argumentValues[])
 {
-	try
-	{
-		CmdLine cmd(LOGO, ' ', VERSION);
+	CmdLine cmd("Athena's CLI", ' ', VERSION, false);
 
-		UnlabeledValueArg<string> literalCommand("command", "Execute a command from Athena CLI", true, "test", "string");
-		UnlabeledValueArg<string> fileArg("file", "File path to be tested", false, "", "string");
+	UnlabeledValueArg<string> literalCommand("command", "Execute a command from Athena CLI", true, "test", "test|compile");
+	UnlabeledValueArg<string> fileArg("file", "File path to be tested", false, "", "file path/directory");
 
-		cmd.add(literalCommand);
-		cmd.add(fileArg);
-		cmd.parse(argumentCount, argumentValues);
+	cmd.add(literalCommand);
+	cmd.add(fileArg);
+	cmd.parse(argumentCount, argumentValues);
 
-		if (literalCommand.isSet()) {
-			if (literalCommand.getValue() == "test")
-			{
+	if (literalCommand.isSet()) {
+		if (literalCommand.getValue() == "test")
+		{
 
-			}
-			else if (literalCommand.getValue() == "compile")
-			{
+		}
+		else if (literalCommand.getValue() == "compile")
+		{
 
-			}
-			else
-			{
-				throw("Wrong command value");
-			}
 		}
 	}
-	catch (const std::exception&)
-	{
-
-	}
-
-	// return maybeExecuteCommand(argumentsCount, argumentsValues);
 }

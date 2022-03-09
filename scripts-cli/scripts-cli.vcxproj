@@ -142,13 +142,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="commands.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cli.hpp" />
     <ClInclude Include="colors.hpp" />
-    <ClInclude Include="commands.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
