@@ -14,12 +14,12 @@
 - '**/**/*.vcxproj.filters'
 
 # Change type: CMake configuration
-'type: c++':
+'type: cmake':
 - CMakeLists.txt
 - '**/CMakeLists.txt'
 
 # Change type: C++ Code
-'type: c++':
+'type: cpp':
 - '**/*.cpp'
 - '**/*.hpp'
 

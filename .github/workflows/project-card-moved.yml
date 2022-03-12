@@ -1,6 +1,8 @@
 on:
   project_card:
-    types: [moved]
+    types: [created, moved]
+  issues:
+    types: [opened]
 
 name: Project Card Event
 jobs:
