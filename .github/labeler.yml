@@ -19,7 +19,7 @@
 - '**/CMakeLists.txt'
 
 # Change type: C++ Code
-'type: c++':
+'type: cpp':
 - '**/*.cpp'
 - '**/*.hpp'
 
