@@ -1,0 +1,28 @@
+# Change type: Editor configuration
+'type: editor':
+- .editorconfig
+- .ccls
+
+# Change type: Repo's license
+'type: license':
+- LICENSE
+
+# Change type: Visual Studio solution/project
+'type: visual studio':
+- 'Athena.sln'
+- '**/**/*.vcxproj'
+- '**/**/*.vcxproj.filters'
+
+# Change type: CMake configuration
+'type: c++':
+- CMakeLists.txt
+- '**/CMakeLists.txt'
+
+# Change type: C++ Code
+'type: c++':
+- '**/*.cpp'
+- '**/*.hpp'
+
+# Change type: Github Actions workflows
+'type: workflows':
+- LICENSE
