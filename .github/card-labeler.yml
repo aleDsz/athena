@@ -1,0 +1,11 @@
+Athena's CLI - MVP:
+  To do:
+    - 'task: to do'
+  In progress:
+    - 'task: in progress'
+  Review in progress:
+    - 'task: review in progress'
+  Review approved:
+    - 'task: Review approved'
+  Done:
+    - 'task: done'
