@@ -7,7 +7,7 @@ file( GLOB CLI_HEADERS ${CLI_SOURCE_DIR}/*.hpp )
 file( GLOB CLI_SOURCES ${CLI_SOURCE_DIR}/*.cpp )
 
 # include folders
-set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${TCLAP_HEADERS_PATH} )
+set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${TCLAP_HEADERS_PATH} ${DIRENT_HEADERS_PATH} )
 
 # set sources
 include_directories( ${INCLUDE_DIRS} )

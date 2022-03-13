@@ -1,3 +1,5 @@
 clang++
 %h %cpp -std=c++14
 -I./packages/tclap.1.2.1/build/native/include/tclap
+-I./packages/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.5/build/native/include
+-I./packages/dirent.1.13.1/build/native/include
