@@ -11,34 +11,39 @@ $$ |  $$ |  \$$$$  |$$ |  $$ |\$$$$$$$\ $$ |  $$ |\$$$$$$$ |
 
  */
 
-#include "cli.hpp"
-#include <iostream>
-#include <algorithm>
-#include <vector>
 #include <tclap/CmdLine.h>
 
-using namespace std;
+#include <string>
+#include <vector>
+
+#include "cli.hpp"
+#include "colors.hpp"
+#include "command_dispatcher.hpp"
+#include "utils.hpp"
+
 using namespace TCLAP;
 
-int main(int argumentCount, char* argumentValues[])
+int main(int argumentCount, const char* const *argumentValues)
 {
-	CmdLine cmd("Athena's CLI", ' ', VERSION, false);
+	CmdLine cmd(GRN("Athena's CLI"), ' ', VERSION, false);
 
-	UnlabeledValueArg<string> literalCommand("command", "Execute a command from Athena CLI", true, "test", "test|compile");
-	UnlabeledValueArg<string> fileArg("file", "File path to be tested", false, "", "file path/directory");
+	UnlabeledValueArg<std::string> literalCommand(RED("command"), CYN("Execute a command from Athena CLI"), true, "test", RED("test|compile"));
+	UnlabeledValueArg<std::string> pathArg(BLU("path"), CYN("File path/directory"), false, "", BLU("file path/directory"));
 
 	cmd.add(literalCommand);
-	cmd.add(fileArg);
+	cmd.add(pathArg);
 	cmd.parse(argumentCount, argumentValues);
 
-	if (literalCommand.isSet()) {
-		if (literalCommand.getValue() == "test")
-		{
+	std::string currentPath = getCurrentWorkingDirectory();
 
-		}
-		else if (literalCommand.getValue() == "compile")
-		{
+	if (!literalCommand.isSet()) return 1;
 
-		}
+	std::string command = literalCommand.getValue();
+
+	if (pathArg.isSet()) {
+		std::shared_ptr<std::string> path(&pathArg.getValue());
+		return executeCommand(currentPath, command, path);
 	}
+
+	return executeCommand(currentPath, command);
 }
