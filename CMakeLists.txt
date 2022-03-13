@@ -53,5 +53,5 @@ exec_program( ${NUGET_EXE} ARGS restore ${CMAKE_SOURCE_DIR}/Athena.sln -MSBuildV
 # Set path for each of them
 set( TCLAP_HEADERS_PATH ${INCLUDE_NUGET_PACKAGES_PATH}/tclap.1.2.1/build/native/include/tclap )
 
-# Add project targets
-add_subdirectory( scripts-cli )
+# Add source folder
+add_subdirectory( src )
