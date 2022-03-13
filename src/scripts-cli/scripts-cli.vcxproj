@@ -76,6 +76,7 @@
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
     <CodeAnalysisRuleSet>CppCoreCheckRules.ruleset</CodeAnalysisRuleSet>
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -106,6 +107,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\dirent.1.13.1\build\native\include;$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)build\native\include;$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,6 +140,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)build\native\include;$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\dirent.1.13.1\build\native\include;$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)build\native\include;$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
