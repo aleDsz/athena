@@ -13,6 +13,7 @@ $$ |  $$ |  \$$$$  |$$ |  $$ |\$$$$$$$\ $$ |  $$ |\$$$$$$$ |
 
 #include <stdio.h>
 
+#include <filesystem>
 #include <memory>
 #include <iostream>
 #include <string>
@@ -20,13 +21,7 @@ $$ |  $$ |  \$$$$  |$$ |  $$ |\$$$$$$$\ $$ |  $$ |\$$$$$$$ |
 
 #include "cli.hpp"
 
-#ifdef WINDOWS
-#include <direct.h>
-#define GetCurrentDir _getcwd
-#else
-#include <unistd.h>
-#define GetCurrentDir getcwd
-#endif
+namespace fs = std::filesystem;
 
 /*
  * Validates the existence of given path.
@@ -35,8 +30,7 @@ $$ |  $$ |  \$$$$  |$$ |  $$ |\$$$$$$$\ $$ |  $$ |\$$$$$$$ |
  */
 bool isValidPath(std::string path) noexcept
 {
-	struct stat buffer;
-	return (stat(path.c_str(), &buffer) == 0);
+	return fs::exists(path);
 }
 
 /*
@@ -46,10 +40,8 @@ bool isValidPath(std::string path) noexcept
  */
 std::string getCurrentWorkingDirectory()
 {
-	char workingDirectory[FILENAME_MAX];
-	GetCurrentDir(workingDirectory, FILENAME_MAX);
-
-	return workingDirectory;
+	auto current_path = fs::current_path();
+	return current_path.string();
 }
 
 /*
