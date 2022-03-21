@@ -11,14 +11,15 @@ $$ |  $$ |  \$$$$  |$$ |  $$ |\$$$$$$$\ $$ |  $$ |\$$$$$$$ |
 
  */
 
-#include <dirent.h>
-
 #include <iostream>
+#include <filesystem>
 
 #include "files.hpp"
 #include "utils.hpp"
 
-std::vector<std::string> listDirectoriesFrom(std::string baseDirectory);
+namespace fs = std::filesystem;
+
+static std::vector<std::string> listDirectoriesFrom(std::string baseDirectory);
 
  /*
   * List contents from given directory.
@@ -27,29 +28,19 @@ std::vector<std::string> listDirectoriesFrom(std::string baseDirectory);
   * \param contentType The content type to be filtered
   * \return The content list from given directory
   */
-static std::vector<std::string> listDirectoryContent(std::string directory, int contentType)
+static std::vector<std::string> listDirectoryContent(std::string directory, enum entry_type contentType)
 {
 	std::vector<std::string> contentList;
-	DIR* dir;
-	struct dirent* ent;
 
-	contentList.clear();
-
-	if ((dir = opendir(directory.c_str())) != NULL) {
-		while ((ent = readdir(dir)) != NULL) {
-			std::string content = std::string(ent->d_name);
-
-			if (ent->d_type == contentType)
-			{
-				contentList.push_back(content);
-			}
-			else if (contentType == DT_UNKNOWN && ent->d_type != DT_DIR)
-			{
-				contentList.push_back(content);
-			}
+	for (const auto& entry : fs::directory_iterator(directory))
+	{
+		if (contentType == ENT_DIRECTORY) {
+			if (entry.is_directory())
+				contentList.push_back(entry.path());
+		} else if (contentType == ENT_FILE) {
+			if (!entry.is_directory())
+				contentList.push_back(entry.path());
 		}
-
-		closedir(dir);
 	}
 
 	return contentList;
@@ -63,7 +54,7 @@ static std::vector<std::string> listDirectoryContent(std::string directory, int 
  */
 static std::vector<std::string> listFilesFrom(std::string directory)
 {
-	std::vector<std::string> tempFileList = listDirectoryContent(directory, DT_UNKNOWN);
+	std::vector<std::string> tempFileList = listDirectoryContent(directory, ENT_FILE);
 	std::vector<std::string> fileList;
 
 	for (const auto& content : tempFileList) {
@@ -89,7 +80,7 @@ static std::vector<std::string> listFilesFrom(std::string directory)
 static void listDirectoriesFrom(std::string baseDirectory, std::vector<std::string> sourceList, std::vector<std::string>* directoryList)
 {
 	if (directoryList->empty()) {
-		sourceList = listDirectoryContent(baseDirectory, DT_DIR);
+		sourceList = listDirectoryContent(baseDirectory, ENT_DIRECTORY);
 	}
 
 	for (std::string directory : sourceList) {
@@ -98,10 +89,10 @@ static void listDirectoriesFrom(std::string baseDirectory, std::vector<std::stri
 			// std::shared_ptr<std::string> c_directory(directory);
 
 			directoryList->push_back(directory);
-			std::string path = getFullPath(baseDirectory, directory);
-			std::vector<std::string> directories = listDirectoriesFrom(baseDirectory);
+			// std::string path = getFullPath(baseDirectory, directory);
+			// std::vector<std::string> directories = listDirectoriesFrom(baseDirectory);
 
-			listDirectoriesFrom(path, directories, directoryList);
+			// listDirectoriesFrom(path, directories, directoryList);
 		}
 	}
 }
@@ -114,7 +105,7 @@ static void listDirectoriesFrom(std::string baseDirectory, std::vector<std::stri
  */
 static std::vector<std::string> listDirectoriesFrom(std::string baseDirectory)
 {
-	std::vector<std::string> sourceList = listDirectoryContent(baseDirectory, DT_DIR);
+	std::vector<std::string> sourceList = listDirectoryContent(baseDirectory, ENT_DIRECTORY);
 	std::vector<std::string>* directoryList;
 
 	listDirectoriesFrom(baseDirectory, sourceList, directoryList);

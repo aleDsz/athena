@@ -20,6 +20,11 @@ $$ |  $$ |  \$$$$  |$$ |  $$ |\$$$$$$$\ $$ |  $$ |\$$$$$$$ |
 
 #define ATHENA_SCRIPT_EXTENSION "atxt"
 
+enum entry_type {
+	ENT_DIRECTORY = 1,
+	ENT_FILE
+};
+
 std::map<std::string, std::vector<std::string>> listFileTreeFrom(std::string fullPath);
 
 #endif // __ATHENA_FILES_H__
