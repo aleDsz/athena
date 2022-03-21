@@ -21,6 +21,7 @@ $$ |  $$ |  \$$$$  |$$ |  $$ |\$$$$$$$\ $$ |  $$ |\$$$$$$$ |
 
 #include "cli.hpp"
 #include "command_dispatcher.hpp"
+#include "files.hpp"
 #include "utils.hpp"
 
 /*
@@ -65,6 +66,8 @@ int executeCommand(std::string currentPath, std::string command, std::shared_ptr
 
 	if (!isValidCommand(command)) return 1;
 	if (!isValidPath(fullPath)) return 1;
+
+	auto fileTree = listFileTreeFrom(fullPath);
 
 	return 0;
 }
