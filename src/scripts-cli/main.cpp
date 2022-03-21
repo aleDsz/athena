@@ -13,6 +13,7 @@ $$ |  $$ |  \$$$$  |$$ |  $$ |\$$$$$$$\ $$ |  $$ |\$$$$$$$ |
 
 #include <tclap/CmdLine.h>
 
+#include <memory>
 #include <string>
 #include <vector>
 
