@@ -108,6 +108,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)build\native\include;$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +143,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)build\native\include;$(SolutionDir)packages\tclap.1.2.1\build\native\include\tclap;$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnablePREfast>true</EnablePREfast>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
