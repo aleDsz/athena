@@ -21,19 +21,30 @@ set( CLI_TEST_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
 message( STATUS "Creating target cli test - start" )
 
 # load all files
-file( GLOB CLI_TEST_CXX_HEADERS ${CLI_SOURCE_DIR}/*.hpp )
-file( GLOB CLI_TEST_HEADERS ${CLI_SOURCE_DIR}/*.h )
-file( GLOB CLI_TEST_SOURCES ${CLI_SOURCE_DIR}/*.cpp )
-
-# include folders
-set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${TCLAP_HEADERS_PATH} ${CLI_SOURCE_DIR} )
+file( GLOB CLI_TEST_HEADERS ${CLI_TEST_SOURCE_DIR}/*.h ${CLI_TEST_SOURCE_DIR}/*.hpp )
+file( GLOB CLI_TEST_SOURCES ${CLI_TEST_SOURCE_DIR}/*.cpp )
 
 # set sources
-include_directories( ${INCLUDE_DIRS} )
-set( SOURCE_FILES ${CLI_TEST_HEADERS} ${CLI_TEST_CXX_HEADERS} ${CLI_TEST_SOURCES} )
-source_group( test_cli FILES ${CLI_TEST_HEADERS} ${CLI_TEST_CXX_HEADERS} ${CLI_TEST_SOURCES} )
+set( SOURCE_FILES ${GTEST_FILES} ${CLI_TEST_HEADERS} ${CLI_TEST_SOURCES} )
 
 # build application
-add_executable( test_cli ${SOURCE_FILES} )
+add_executable( cli_test ${SOURCE_FILES} )
+
+# add dependency
+add_dependencies( cli_test cli_lib )
+
+# build tests
+add_test( NAME cli_test COMMAND cli_test )
+
+# link libs
+target_link_libraries( cli_test cli_lib )
+
+if( ${gtest_BUILD_TYPE} STREQUAL "Debug" )
+	target_link_libraries( cli_test ${GTEST_SOURCES_PATH}/gtestd.lib )
+	target_link_libraries( cli_test ${GTEST_SOURCES_PATH}/gtest_maind.lib )
+else()
+	target_link_libraries( cli_test ${GTEST_SOURCES_PATH}/gtest.lib )
+	target_link_libraries( cli_test ${GTEST_SOURCES_PATH}/gtest_main.lib )
+endif()
 
 message( STATUS "Creating target cli test - done" )

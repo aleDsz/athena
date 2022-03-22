@@ -35,4 +35,7 @@ source_group( cli FILES ${CLI_HEADERS} ${CLI_SOURCES} )
 # build application
 add_executable( cli ${SOURCE_FILES} )
 
+# build lib for testing
+add_library( cli_lib STATIC ${SOURCE_FILES} )
+
 message( STATUS "Creating target cli - done" )

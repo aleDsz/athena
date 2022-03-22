@@ -12,15 +12,15 @@ $$ |  $$ |  \$$$$  |$$ |  $$ |\$$$$$$$\ $$ |  $$ |\$$$$$$$ |
  */
 
 #include <iostream>
+#include <memory>
 
 #include "pch.h"
-#include "scripts-cli/command_dispatcher.cpp"
+#include "scripts-cli/command_dispatcher.hpp"
 
-TEST(command_dispatcher, isValidCommandTest)
+TEST(command_dispatcher, executeInvalidCommandTest)
 {
-	EXPECT_TRUE(isValidCommand("test"));
-	EXPECT_TRUE(isValidCommand("compile"));
-	EXPECT_FALSE(isValidCommand("foo"));
+	int result = executeCommand(TEMP_PATH, "foo");
+	EXPECT_EQ(1, result);
 }
 
 TEST(command_dispatcher, executeTestCommandWithoutPathTest)
