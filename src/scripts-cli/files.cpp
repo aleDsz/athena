@@ -34,12 +34,15 @@ static std::vector<std::string> listDirectoryContent(std::string directory, enum
 
 	for (const auto& entry : fs::directory_iterator(directory))
 	{
+		fs::path path = entry.path();
+		std::string entryPath = path.generic_string();
+
 		if (contentType == ENT_DIRECTORY) {
 			if (entry.is_directory())
-				contentList.push_back(entry.path());
+				contentList.push_back(entryPath);
 		} else if (contentType == ENT_FILE) {
 			if (!entry.is_directory())
-				contentList.push_back(entry.path());
+				contentList.push_back(entryPath);
 		}
 	}
 
@@ -77,9 +80,9 @@ static std::vector<std::string> listFilesFrom(std::string directory)
  * \param sourceList The given directory to list directories
  * \param directoryList The given directory to list directories
  */
-static void listDirectoriesFrom(std::string baseDirectory, std::vector<std::string> sourceList, std::vector<std::string>* directoryList)
+static void listDirectoriesFrom(std::string baseDirectory, std::vector<std::string> sourceList, std::vector<std::string> directoryList)
 {
-	if (directoryList->empty()) {
+	if (directoryList.empty()) {
 		sourceList = listDirectoryContent(baseDirectory, ENT_DIRECTORY);
 	}
 
@@ -88,7 +91,7 @@ static void listDirectoriesFrom(std::string baseDirectory, std::vector<std::stri
 		{
 			// std::shared_ptr<std::string> c_directory(directory);
 
-			directoryList->push_back(directory);
+			directoryList.push_back(directory);
 			// std::string path = getFullPath(baseDirectory, directory);
 			// std::vector<std::string> directories = listDirectoriesFrom(baseDirectory);
 
@@ -106,11 +109,11 @@ static void listDirectoriesFrom(std::string baseDirectory, std::vector<std::stri
 static std::vector<std::string> listDirectoriesFrom(std::string baseDirectory)
 {
 	std::vector<std::string> sourceList = listDirectoryContent(baseDirectory, ENT_DIRECTORY);
-	std::vector<std::string>* directoryList;
+	std::vector<std::string> directoryList;
 
 	listDirectoriesFrom(baseDirectory, sourceList, directoryList);
 
-	return *directoryList;
+	return directoryList;
 }
 
 /*
