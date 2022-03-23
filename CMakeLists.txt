@@ -35,8 +35,13 @@ set( CMAKE_CXX_STANDARD_REQUIRED ON )
 # NuGet Packages path
 set( INCLUDE_NUGET_PACKAGES_PATH ${CMAKE_SOURCE_DIR}/packages )
 
-# Athena's src path
-set( ATHENA_SOURCE_PATH ${CMAKE_SOURCE_DIR}/src )
+# Athena include dir
+set( ATHENA_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src )
+set( cli_lib_DIR ${CMAKE_SOURCE_DIR}/build/src/scripts-cli )
+
+# Project prefixes
+set( CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/install )
+set( CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/install )
 
 # Set current system architecture
 EXECUTE_PROCESS( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE )
@@ -50,12 +55,14 @@ message( STATUS "Current System Architecture: ${ARCHITECTURE}" )
 
 # Set current build type
 if( CMAKE_BUILD_TYPE STREQUAL "" )
-	set( gtest_BUILD_TYPE "Debug" )
+	set( GTEST_BUILD_TYPE "Debug" )
 elseif(NOT CMAKE_BUILD_TYPE STREQUAL "Release" )
-	set( gtest_BUILD_TYPE "Debug" )
+	set( GTEST_BUILD_TYPE "Debug" )
+else()
+	set( GTEST_BUILD_TYPE "Release" )
 endif()
 
-message( STATUS "Current Build Type: ${gtest_BUILD_TYPE}" )
+message( STATUS "Current Build Type: ${GTEST_BUILD_TYPE}" )
 
 #####################################################################
 #
@@ -76,12 +83,16 @@ exec_program( ${NUGET_EXE} ARGS restore ${CMAKE_SOURCE_DIR}/Athena.sln -MSBuildV
 set( TCLAP_HEADERS_PATH ${INCLUDE_NUGET_PACKAGES_PATH}/tclap.1.2.1/build/native/include/tclap )
 set( GTEST_PATH ${INCLUDE_NUGET_PACKAGES_PATH}/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.5 )
 
-set( GTEST_HEADERS_PATH ${GTEST_PATH}/build/native/include )
-set( GTEST_SOURCES_PATH ${GTEST_PATH}/lib/native/v140/windesktop/msvcstl/static/rt-dyn/${ARCHITECTURE}/${gtest_BUILD_TYPE} )
+set( GTEST_INCLUDE_DIR ${GTEST_PATH}/build/native/include )
+set( GTEST_SOURCES_PATH ${GTEST_PATH}/lib/native/v140/windesktop/msvcstl/static/rt-dyn/${ARCHITECTURE}/${GTEST_BUILD_TYPE} )
 
-# Include gtest and main source folders
-include_directories( src ${GTEST_HEADERS_PATH} ${GTEST_SOURCES_PATH} )
-enable_testing()
+if( ${GTEST_BUILD_TYPE} STREQUAL "Debug" )
+	set( GTEST_LIBRARY ${GTEST_SOURCES_PATH}/gtestd.lib )
+	set( GTEST_MAIN_LIBRARY ${GTEST_SOURCES_PATH}/gtest_maind.lib )
+else()
+	set( GTEST_LIBRARY ${GTEST_SOURCES_PATH}/gtest.lib )
+	set( GTEST_MAIN_LIBRARY ${GTEST_SOURCES_PATH}/gtest_main.lib )
+endif()
 
 #####################################################################
 #

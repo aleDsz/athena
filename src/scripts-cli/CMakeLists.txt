@@ -26,9 +26,9 @@ file( GLOB CLI_SOURCES ${CLI_SOURCE_DIR}/*.cpp )
 
 # include folders
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${TCLAP_HEADERS_PATH} )
+include_directories( ${INCLUDE_DIRS} )
 
 # set sources
-include_directories( ${INCLUDE_DIRS} )
 set( SOURCE_FILES ${CLI_HEADERS} ${CLI_SOURCES} )
 source_group( cli FILES ${CLI_HEADERS} ${CLI_SOURCES} )
 
@@ -37,5 +37,25 @@ add_executable( cli ${SOURCE_FILES} )
 
 # build lib for testing
 add_library( cli_lib STATIC ${SOURCE_FILES} )
+
+# install lib
+install( TARGETS cli_lib EXPORT cli_lib_targets
+	       ARCHIVE DESTINATION lib
+				 LIBRARY DESTINATION lib
+				 INCLUDES DESTINATION include )
+
+install( FILES ${CLI_HEADERS} DESTINATION include )
+install( EXPORT cli_lib_targets NAMESPACE athena:: DESTINATION lib/cmake/cli_lib )
+
+# generate lib target/config for cmake
+include( CMakePackageConfigHelpers )
+
+write_basic_package_version_file( ${CMAKE_CURRENT_BINARY_DIR}/cli_lib-config.cmake
+	                                VERSION 0.1.0
+                                  COMPATIBILITY AnyNewerVersion )
+
+install( FILES cli_lib-config.cmake
+	             ${CMAKE_CURRENT_BINARY_DIR}/cli_lib-config.cmake
+         DESTINATION lib/cmake/cli_lib )
 
 message( STATUS "Creating target cli - done" )
